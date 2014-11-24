@@ -6,6 +6,41 @@
         Height="350"
         Width="525"
         x:Name="windowMain">
+    <Window.Resources>
+        <Style x:Key="searchResultDataGrid"
+               TargetType="DataGrid">
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsSomethingWrong}"
+                             Value="True">
+                    <Setter Property="BorderBrush"
+                            Value="Transparent" />
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect Color="Red"
+                                              RenderingBias="Quality"
+                                              ShadowDepth="0"
+                                              BlurRadius="10" />
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="searchResultDataGridCell"
+               TargetType="DataGridCell">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsSomethingWrong}"
+                             Value="True">
+                    <Setter Property="Foreground"
+                            Value="Red" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <DockPanel Margin="10">
         <StackPanel DockPanel.Dock="Top">
             <DockPanel Height="23"
@@ -56,7 +91,9 @@
                   SelectionUnit="FullRow"
                   IsReadOnly="True"
                   CanUserResizeRows="False"
-                  SelectionChanged="FileList_SelectionChanged">
+                  SelectionChanged="FileList_SelectionChanged"
+                  Style="{StaticResource ResourceKey=searchResultDataGrid}"
+                  CellStyle="{StaticResource ResourceKey=searchResultDataGridCell}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="File"
                                     Binding="{Binding DisplayText}"

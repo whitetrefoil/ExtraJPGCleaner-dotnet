@@ -71,6 +71,23 @@ namespace ExtraJPGCleaner
             }
         }
 
+        public bool IsSomethingWrong
+        {
+            get
+            {
+                var isWrong = false;
+                foreach (var r in Results)
+                {
+                    if (r.IsFailed)
+                    {
+                        isWrong = true;
+                        break;
+                    }
+                }
+                return isWrong;
+            }
+        }
+
         SearchResults results;
         public SearchResults Results
         {
@@ -161,6 +178,7 @@ namespace ExtraJPGCleaner
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs("Results"));
+                PropertyChanged(this, new PropertyChangedEventArgs("IsSomethingWrong"));
             }
         }
 
