@@ -1,0 +1,70 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        x:Class="ExtraJPGCleaner.MainWindow"
+        Title="MainWindow"
+        Height="350"
+        Width="525"
+        x:Name="windowMain">
+    <DockPanel Margin="10">
+        <StackPanel DockPanel.Dock="Top">
+            <DockPanel Height="23"
+                       Margin="0,0,0,10">
+                <Button Name="buttonBrowseLocation"
+                        DockPanel.Dock="Right"
+                        Width="60"
+                        Click="buttonBrowseLocation_Click"
+                        Content="Browse" />
+                <Label Width="70"
+                       DockPanel.Dock="Left"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Right"
+                       Content="Location:" />
+                <TextBox x:Name="textBoxLocation"
+                         Margin="10,0"
+                         Text="{Binding Location}" />
+            </DockPanel>
+            <DockPanel Height="23"
+                       Margin="0,0,0,10">
+                <Button DockPanel.Dock="Right"
+                        Width="60"
+                        Content="Search"
+                        Name="buttonSearch"
+                        IsEnabled="{Binding IsLocationValid}"
+                        Click="buttonSearch_Click" />
+                <Button DockPanel.Dock="Right"
+                        Width="60"
+                        Margin="0,0,10,0"
+                        Content="Delete"
+                        Name="buttonDelete"
+                        IsEnabled="{Binding IsFileSelected}"
+                        Click="buttonDelete_Click" />
+                <Label DockPanel.Dock="Left"
+                       Width="70"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Right"
+                       Content="Extensions:" />
+                <TextBox Margin="10,0"
+                         Text="{Binding Extensions}" />
+            </DockPanel>
+        </StackPanel>
+        <DataGrid Name="FileList"
+                  ItemsSource="{Binding Results}"
+                  AutoGenerateColumns="False"
+                  GridLinesVisibility="None"
+                  SelectionMode="Extended"
+                  SelectionUnit="FullRow"
+                  IsReadOnly="True"
+                  CanUserResizeRows="False"
+                  SelectionChanged="FileList_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="File"
+                                    Binding="{Binding Path}"
+                                    Width="1*" />
+                <DataGridTextColumn Header="RAW Ext."
+                                    Binding="{Binding Extensions}"
+                                    Width="80" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</Window>
