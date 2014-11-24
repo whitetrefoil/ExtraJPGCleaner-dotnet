@@ -149,7 +149,6 @@ namespace ExtraJPGCleaner
         private void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
             delete();
-            search();
         }
 
         private void FileList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -157,7 +156,15 @@ namespace ExtraJPGCleaner
             updateSelectionList(((DataGrid)sender).SelectedItems);
         }
 
-        private void SelectedFilesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void resultsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("Results"));
+            }
+        }
+
+        private void selectedFilesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             PropertyChanged(this, new PropertyChangedEventArgs("IsFileSelected"));
         }
@@ -172,7 +179,8 @@ namespace ExtraJPGCleaner
             DataContext = this;
             Results = new SearchResults();
             SelectedFiles = new ObservableCollection<SearchResult>();
-            SelectedFiles.CollectionChanged += SelectedFilesChanged;
+            SelectedFiles.CollectionChanged += selectedFilesChanged;
+            Results.CollectionChanged += resultsChanged;
         }
     }
 }

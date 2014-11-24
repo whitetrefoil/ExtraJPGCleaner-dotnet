@@ -47,6 +47,21 @@ namespace ExtraJPGCleaner.Models
         public bool IsFailed { get; set; }
         public string FailReason { get; set; }
 
+        public string DisplayText
+        {
+            get
+            {
+                if (IsFailed)
+                {
+                    return "(" + FailReason + ") " + Path;
+                }
+                else
+                {
+                    return Path;
+                }
+            }
+        }
+
         public SearchResult(SearchResults results, string jpgPath, string[] rawExtensions)
         {
             Parent = results;

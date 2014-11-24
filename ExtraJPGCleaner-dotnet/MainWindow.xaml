@@ -59,7 +59,7 @@
                   SelectionChanged="FileList_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="File"
-                                    Binding="{Binding Path}"
+                                    Binding="{Binding DisplayText}"
                                     Width="1*" />
                 <DataGridTextColumn Header="RAW Ext."
                                     Binding="{Binding Extensions}"
