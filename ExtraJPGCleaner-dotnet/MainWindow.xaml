@@ -10,7 +10,7 @@
         <StackPanel DockPanel.Dock="Top">
             <DockPanel Height="23"
                        Margin="0,0,0,10">
-                <Button Name="buttonBrowseLocation"
+                <Button x:Name="buttonBrowseLocation"
                         DockPanel.Dock="Right"
                         Width="60"
                         Click="buttonBrowseLocation_Click"
@@ -29,14 +29,14 @@
                 <Button DockPanel.Dock="Right"
                         Width="60"
                         Content="Search"
-                        Name="buttonSearch"
+                        x:Name="buttonSearch"
                         IsEnabled="{Binding IsLocationValid}"
                         Click="buttonSearch_Click" />
                 <Button DockPanel.Dock="Right"
                         Width="60"
                         Margin="0,0,10,0"
                         Content="Delete"
-                        Name="buttonDelete"
+                        x:Name="buttonDelete"
                         IsEnabled="{Binding IsFileSelected}"
                         Click="buttonDelete_Click" />
                 <Label DockPanel.Dock="Left"
@@ -48,7 +48,7 @@
                          Text="{Binding Extensions}" />
             </DockPanel>
         </StackPanel>
-        <DataGrid Name="FileList"
+        <DataGrid x:Name="FileList"
                   ItemsSource="{Binding Results}"
                   AutoGenerateColumns="False"
                   GridLinesVisibility="None"
