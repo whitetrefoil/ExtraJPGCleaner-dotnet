@@ -15,7 +15,7 @@
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsSomethingWrong}"
+                <DataTrigger Binding="{Binding IsSomethingWrong, Mode=OneWay}"
                              Value="True">
                     <Setter Property="BorderBrush"
                             Value="Transparent" />
@@ -33,7 +33,7 @@
         <Style x:Key="searchResultDataGridCell"
                TargetType="DataGridCell">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsSomethingWrong}"
+                <DataTrigger Binding="{Binding DataContext.IsSomethingWrong, Mode=OneWay, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                              Value="True">
                     <Setter Property="Foreground"
                             Value="Red" />
@@ -65,14 +65,14 @@
                         Width="60"
                         Content="Search"
                         x:Name="buttonSearch"
-                        IsEnabled="{Binding IsLocationValid}"
+                        IsEnabled="{Binding IsLocationValid, Mode=OneWay}"
                         Click="buttonSearch_Click" />
                 <Button DockPanel.Dock="Right"
                         Width="60"
                         Margin="0,0,10,0"
                         Content="Delete"
                         x:Name="buttonDelete"
-                        IsEnabled="{Binding IsFileSelected}"
+                        IsEnabled="{Binding IsFileSelected, Mode=OneWay}"
                         Click="buttonDelete_Click" />
                 <Label DockPanel.Dock="Left"
                        Width="70"
@@ -84,7 +84,7 @@
             </DockPanel>
         </StackPanel>
         <DataGrid x:Name="FileList"
-                  ItemsSource="{Binding Results}"
+                  ItemsSource="{Binding Results, Mode=OneWay}"
                   AutoGenerateColumns="False"
                   GridLinesVisibility="None"
                   SelectionMode="Extended"
@@ -96,10 +96,10 @@
                   CellStyle="{StaticResource ResourceKey=searchResultDataGridCell}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="File"
-                                    Binding="{Binding DisplayText}"
+                                    Binding="{Binding DisplayText, Mode=OneWay}"
                                     Width="1*" />
                 <DataGridTextColumn Header="RAW Ext."
-                                    Binding="{Binding Extensions}"
+                                    Binding="{Binding Extensions, Mode=OneWay}"
                                     Width="80" />
             </DataGrid.Columns>
         </DataGrid>
