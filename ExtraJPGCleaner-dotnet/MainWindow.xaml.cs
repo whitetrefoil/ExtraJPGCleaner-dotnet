@@ -1,15 +1,15 @@
-﻿using System.IO;
-using System.Windows;
-using System.ComponentModel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Controls;
 using System.Collections.Specialized;
+using System.ComponentModel;
+using System.IO;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace ExtraJPGCleaner
 {
-    using Models;
     using Helpers;
+    using Models;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -36,6 +36,7 @@ namespace ExtraJPGCleaner
                     PropertyChanged(this, new PropertyChangedEventArgs("Location"));
                     PropertyChanged(this, new PropertyChangedEventArgs("IsLocationValid"));
                 }
+                Config.Update("Location", location);
             }
         }
 
@@ -50,6 +51,7 @@ namespace ExtraJPGCleaner
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Extensions"));
                 }
+                Config.Update("Extensions", extensions);
             }
         }
 
@@ -192,8 +194,8 @@ namespace ExtraJPGCleaner
         public MainWindow()
         {
             InitializeComponent();
-            Location = "D:\\tmp";
-            Extensions = "ARW,RW2,DNG";
+            Location = Config.Read("Location");
+            Extensions = Config.Read("Extensions");
             DataContext = this;
             Results = new SearchResults();
             SelectedFiles = new ObservableCollection<SearchResult>();
