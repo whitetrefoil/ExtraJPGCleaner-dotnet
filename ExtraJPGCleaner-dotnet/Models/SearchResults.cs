@@ -6,7 +6,7 @@ namespace ExtraJPGCleaner.Models
 {
     public class SearchResult
     {
-        public SearchResults Parent { get; set; }
+        public SearchResultCollection Parent { get; set; }
 
         string path;
         public string Path
@@ -19,7 +19,7 @@ namespace ExtraJPGCleaner.Models
                 }
                 else
                 {
-                    return GetRelativePath(FullPath, Parent.BasePath);
+                    return GetRelativePath();
                 }
             }
         }
@@ -60,7 +60,7 @@ namespace ExtraJPGCleaner.Models
             }
         }
 
-        public SearchResult(SearchResults results, string jpgPath, string[] rawExtensions)
+        public SearchResult(SearchResultCollection results, string jpgPath, string[] rawExtensions)
         {
             Parent = results;
             path = jpgPath;
@@ -75,18 +75,16 @@ namespace ExtraJPGCleaner.Models
         /// Get relative path.
         /// </summary>
         /// <see cref="http://stackoverflow.com/questions/703281/getting-path-relative-to-the-current-working-directory"/>
-        /// <param name="filespec"></param>
-        /// <param name="folder"></param>
         /// <returns></returns>
-        private string GetRelativePath(string filespec, string folder)
+        private string GetRelativePath()
         {
-            Uri pathUri = new Uri(filespec);
+            Uri pathUri = new Uri(FullPath);
             // Folders must end in a slash
-            if (!folder.EndsWith(System.IO.Path.DirectorySeparatorChar.ToString()))
+            if (!Parent.BasePath.EndsWith(System.IO.Path.DirectorySeparatorChar.ToString()))
             {
-                folder += System.IO.Path.DirectorySeparatorChar;
+                Parent.BasePath += System.IO.Path.DirectorySeparatorChar;
             }
-            Uri folderUri = new Uri(folder);
+            Uri folderUri = new Uri(Parent.BasePath);
             return Uri.UnescapeDataString(folderUri.MakeRelativeUri(pathUri).ToString().Replace('/', System.IO.Path.DirectorySeparatorChar));
         }
 
@@ -94,7 +92,7 @@ namespace ExtraJPGCleaner.Models
     }
 
 
-    public class SearchResults : ObservableCollection<SearchResult>
+    public class SearchResultCollection : ObservableCollection<SearchResult>
     {
         /// <summary>
         /// The base path which will be used when output the relative path.
@@ -143,6 +141,6 @@ namespace ExtraJPGCleaner.Models
             ResetItems(newList);
         }
 
-        public SearchResults() { }
+        public SearchResultCollection() { }
     }
 }

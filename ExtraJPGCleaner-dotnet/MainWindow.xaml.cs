@@ -57,7 +57,7 @@ namespace ExtraJPGCleaner
             }
         }
 
-        public ObservableCollection<SearchResult> SelectedFiles { get; set; }
+        public ObservableCollection<SearchResult> SelectedFiles { get; private set; }
 
         public bool IsLocationValid
         {
@@ -92,8 +92,8 @@ namespace ExtraJPGCleaner
             }
         }
 
-        SearchResults results;
-        public SearchResults Results
+        SearchResultCollection results;
+        public SearchResultCollection Results
         {
             get { return results; }
             private set
@@ -119,6 +119,7 @@ namespace ExtraJPGCleaner
             {
                 Location = dlg.SelectedPath;
             }
+            dlg.Dispose();
         }
 
         private void search()
@@ -236,7 +237,7 @@ namespace ExtraJPGCleaner
             Location = Config.Read("Location");
             Extensions = Config.Read("Extensions");
             DataContext = this;
-            Results = new SearchResults();
+            Results = new SearchResultCollection();
             SelectedFiles = new ObservableCollection<SearchResult>();
             SelectedFiles.CollectionChanged += selectedFilesChanged;
             Results.CollectionChanged += resultsChanged;
