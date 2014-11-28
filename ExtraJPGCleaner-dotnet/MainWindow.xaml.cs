@@ -10,6 +10,8 @@ namespace ExtraJPGCleaner
 {
     using Helpers;
     using Models;
+    using System;
+    using System.Text;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -142,6 +144,37 @@ namespace ExtraJPGCleaner
             Results.ResetItems(remains);
         }
 
+        private bool showDeletionConfirmDialog()
+        {
+            var count = SelectedFiles.Count;
+            var message = new StringBuilder("Please confirm to delete ");
+
+            if (count > 1)
+            {
+                message.AppendFormat("these {0} files", count);
+            }
+            else
+            {
+                message.Append(SelectedFiles[0].FullPath);
+            }
+            message.Append(".");
+            message.AppendLine();
+
+            if (count > 1)
+            {
+                message.Append("These files ");
+            }
+            else
+            {
+                message.Append("It ");
+            }
+            message.Append("will NOT be moved to Recycle Bin but deleted permanently directly.");
+
+            var result = MessageBox.Show(message.ToString(), "Delete?", MessageBoxButton.YesNo);
+
+            return result == MessageBoxResult.Yes;
+        }
+
         private void updateSelectionList(System.Collections.IList files)
         {
             SelectedFiles.Clear();
@@ -167,7 +200,10 @@ namespace ExtraJPGCleaner
 
         private void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
-            delete();
+            if (showDeletionConfirmDialog())
+            {
+                delete();
+            }
         }
 
         private void FileList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
