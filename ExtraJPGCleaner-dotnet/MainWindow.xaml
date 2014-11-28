@@ -30,10 +30,10 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="searchResultDataGridCell"
-               TargetType="DataGridCell">
+        <Style x:Key="searchResultDataGridRow"
+               TargetType="DataGridRow">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding DataContext.IsSomethingWrong, Mode=OneWay, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                <DataTrigger Binding="{Binding IsFailed, Mode=OneWay}"
                              Value="True">
                     <Setter Property="Foreground"
                             Value="Red" />
@@ -93,7 +93,7 @@
                   CanUserResizeRows="False"
                   SelectionChanged="FileList_SelectionChanged"
                   Style="{StaticResource ResourceKey=searchResultDataGrid}"
-                  CellStyle="{StaticResource ResourceKey=searchResultDataGridCell}">
+                  RowStyle="{StaticResource ResourceKey=searchResultDataGridRow}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="File"
                                     Binding="{Binding DisplayText, Mode=OneWay}"

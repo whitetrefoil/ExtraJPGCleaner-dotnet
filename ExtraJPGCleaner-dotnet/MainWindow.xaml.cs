@@ -130,18 +130,21 @@ namespace ExtraJPGCleaner
 
         private void delete()
         {
-            var remains = new List<SearchResult>();
             foreach (var file in SelectedFiles)
             {
                 var result = FileOperator.Delete(file.FullPath);
-                if (!result.IsSuccessful)
+                if (result.IsSuccessful)
+                {
+                    file.IsDeleted = true;
+                }
+                else
                 {
                     file.IsFailed = true;
                     file.FailReason = result.RawException.Message;
-                    remains.Add(file);
                 }
             }
-            Results.ResetItems(remains);
+
+            Results.CleanupItems();
         }
 
         private bool showDeletionConfirmDialog()

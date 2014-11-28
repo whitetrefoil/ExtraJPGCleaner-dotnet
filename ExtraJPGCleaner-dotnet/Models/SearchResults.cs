@@ -41,6 +41,7 @@ namespace ExtraJPGCleaner.Models
             }
         }
 
+        public bool IsDeleted { get; set; }
         public bool IsFailed { get; set; }
         public string FailReason { get; set; }
 
@@ -127,6 +128,19 @@ namespace ExtraJPGCleaner.Models
                 res.Parent = this;
                 Add(res);
             }
+        }
+
+        public void CleanupItems()
+        {
+            var newList = new List<SearchResult>();
+            foreach (var item in this)
+            {
+                if (!item.IsDeleted)
+                {
+                    newList.Add(item);
+                }
+            }
+            ResetItems(newList);
         }
 
         public SearchResults() { }
